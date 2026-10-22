@@ -8,7 +8,7 @@ One task in flight at a time. Do not start the next task until the current one i
 ## Phase 1 — Foundation
 
 ### T001 — Monorepo scaffolding
-- **Status:** TODO
+- **Status:** DONE
 - **Depends on:** none
 - **Expected result:** npm-workspaces monorepo with `apps/web`, `apps/api`, `packages/shared`, and root scripts that run install, lint, typecheck, test, and build across workspaces.
 - **Completion check:** `npm install` succeeds from a clean clone; `npm run build` and `npm run typecheck` exit 0 with no workspace errors.

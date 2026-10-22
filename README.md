@@ -23,4 +23,26 @@ This project is tracked with the Cline managed-project workflow.
 
 ## Getting Started
 
-Implementation has not started yet. Begin with task T001 in [TASKS.md](TASKS.md): npm-workspaces monorepo scaffolding.
+Requires Node.js 20+ and npm 10+.
+
+```bash
+npm install          # install all workspaces
+npm run dev          # shared watcher + API (4000) + web (5173)
+npm run build        # build shared, api and web
+npm run typecheck    # typecheck all workspaces
+```
+
+The API reads `apps/api/.env` (copy from `apps/api/.env.example`). The web dev server proxies `/api` to the Express server, so the browser sees a single origin.
+
+Current status: T001 (monorepo scaffolding) complete. Continue with T002 in [TASKS.md](TASKS.md).
+
+## Repository Layout
+
+```text
+apps/
+  web/              # React + Vite frontend
+  api/              # Express API
+packages/
+  shared/           # Shared types, Zod schemas, helpers
+docs/               # Product spec, architecture, development rules, roadmap
+```

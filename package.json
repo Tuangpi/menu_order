@@ -1,0 +1,27 @@
+{
+  "name": "menu-order",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Restaurant menu and ordering system for Myanmar restaurants",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build -w @menu/shared && npm run build -w @menu/api && npm run build -w @menu/web",
+    "build:web": "npm run build -w @menu/web",
+    "typecheck": "npm run typecheck -w @menu/shared && npm run typecheck -w @menu/api && npm run typecheck -w @menu/web",
+    "dev": "concurrently -n shared,api,web -c gray,cyan,magenta \"npm run dev -w @menu/shared\" \"npm run dev -w @menu/api\" \"npm run dev -w @menu/web\"",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "clean": "npm run clean --workspaces --if-present"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "typescript": "^5.7.3"
+  }
+}
