@@ -2,11 +2,11 @@
 
 ## Current State
 
-- **Current task:** None. T013 complete.
-- **Most recently completed:** T013 — Cart and checkout API (2026-10-27).
-- **Unfinished work:** T014–T022.
+- **Current task:** None. T017 complete.
+- **Most recently completed:** T017 — Payment recording and manual confirmation (2026-10-27).
+- **Unfinished work:** T018–T022.
 - **Blockers:** None.
-- **Recommended next:** T014 — Transactional order creation with idempotency.
+- **Recommended next:** T018 — Payment UI.
 
 ## Decisions
 
@@ -112,3 +112,27 @@
 - **Files changed:** `apps/web/src/routes/{login,dashboard,menu-manage}.tsx`, `apps/web/src/lib/api.ts`, `apps/web/src/router.tsx`.
 - **Checks run:** `npm run typecheck -w apps/web` exit 0; `npm run lint -w apps/web` 0 errors; `npm run build -w apps/web` exit 0.
 - **Follow-up:** T013 cart/checkout API next.
+
+### T014 — Transactional order creation with idempotency — DONE
+- **Result:** Added transactional order creation in orders module; persists Order + OrderItem snapshots; idempotency keys prevent duplicates; failed creation rolls back.
+- **Files changed:** apps/api/src/modules/orders/order.service.ts, order.routes.ts.
+- **Checks run:** typecheck exit 0; 44 API tests pass; manual idempotency test pass.
+- **Follow-up:** T015 customer ordering UI.
+
+### T015 — Customer ordering UI — DONE
+- **Result:** Enhanced public menu route with cart, quantity controls, checkout submission, and order status view with polling.
+- **Files changed:** apps/web/src/routes/public-menu.tsx.
+- **Checks run:** tsc exit 0; lint 0 errors; build exit 0.
+- **Follow-up:** T016 staff dashboard.
+
+### T016 — Staff dashboard and order status workflow — DONE
+- **Result:** Added backend list/status endpoints with valid transitions; staff UI for listing orders and advancing/cancelling.
+- **Files changed:** apps/api/src/modules/orders/order.routes.ts, order.service.ts; apps/web/src/routes/orders-manage.tsx, router.tsx, dashboard.tsx.
+- **Checks run:** typecheck/lint/tests pass; manual transition test pass.
+- **Follow-up:** T017 payments.
+
+### T017 — Payment recording and manual confirmation — DONE
+- **Result:** Added payments module with cash (immediate confirm) and manual wallet (record then confirm) endpoints, staff identity/timestamps, tenant isolation.
+- **Files changed:** apps/api/src/modules/payments/*, apps/api/src/app.ts.
+- **Checks run:** typecheck/lint pass; 44 tests pass; manual payment test pass.
+- **Follow-up:** T018 payment UI.

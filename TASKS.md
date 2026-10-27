@@ -96,19 +96,19 @@ One task in flight at a time. Do not start the next task until the current one i
 - **Completion check:** Tests confirm totals are calculated server-side, unavailable items are rejected, and foreign-restaurant items are refused.
 
 ### T014 — Transactional order creation with idempotency
-- **Status:** TODO
+- **Status:** DONE
 - **Depends on:** T013
 - **Expected result:** Order and order-item creation inside a database transaction, storing item name and price as historical snapshots, with idempotency keys preventing duplicate submissions.
 - **Completion check:** Tests confirm a repeated idempotency key returns the original order, concurrent submissions create one order, and failed creation leaves no partial records.
 
 ### T015 — Customer ordering UI
-- **Status:** TODO
+- **Status:** DONE
 - **Depends on:** T013
 - **Expected result:** Customer flow to browse the menu, manage a cart, submit an order, and view order status on a mobile device.
 - **Completion check:** A customer can place an order end to end from a table QR link and see the resulting order status.
 
 ### T016 — Staff dashboard and order status workflow
-- **Status:** TODO
+- **Status:** DONE
 - **Depends on:** T014
 - **Expected result:** Staff screens listing incoming orders with valid status transitions, keeping order status separate from payment status.
 - **Completion check:** Staff can accept, prepare, and complete an order; invalid status transitions are rejected by tests.
@@ -116,7 +116,7 @@ One task in flight at a time. Do not start the next task until the current one i
 ## Phase 5 — Payments and Reports
 
 ### T017 — Payment recording and manual confirmation
-- **Status:** TODO
+- **Status:** DONE
 - **Depends on:** T016
 - **Expected result:** Cash and manually confirmed KBZPay, WavePay, and AYA Pay QR payments recorded as PaymentEvents with staff identity and timestamps, and no automated verification claims.
 - **Completion check:** Tests confirm confirmations are attributable to staff, timestamps are recorded, and a confirmation cannot be attributed to another restaurant's staff.

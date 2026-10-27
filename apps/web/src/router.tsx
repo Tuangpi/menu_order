@@ -6,6 +6,7 @@ import { PublicMenuRoute } from './routes/public-menu.js';
 import { LoginRoute } from './routes/login.js';
 import { DashboardRoute } from './routes/dashboard.js';
 import { MenuManageRoute } from './routes/menu-manage.js';
+import { OrdersManageRoute } from './routes/orders-manage.js';
 
 /**
  * Application router.
@@ -29,6 +30,7 @@ export const router = createBrowserRouter([
       { path: 'login', element: <LoginRoute /> },
       { path: 'dashboard', element: <DashboardRoute /> },
       { path: 'dashboard/restaurants/:restaurantId/menu', element: <MenuManageRoute /> },
+      { path: 'dashboard/restaurants/:restaurantId/orders', element: <OrdersManageRoute /> },
     ],
   },
 ]);

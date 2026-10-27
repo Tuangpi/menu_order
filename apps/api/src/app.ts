@@ -11,6 +11,7 @@ import { menuRouter } from './modules/menu/menu.routes.js';
 import { tableRouter, tableResolveRouter } from './modules/tables/table.routes.js';
 import { publicRouter } from './modules/public/public.routes.js';
 import { orderRouter } from './modules/orders/order.routes.js';
+import { paymentRouter } from './modules/payments/payment.routes.js';
 import { echoRouter } from './routes/echo.js';
 import { healthRouter } from './routes/health.js';
 import { protectedRouter } from './routes/protected.js';
@@ -38,6 +39,7 @@ export function createApp() {
   app.use('/api', healthRouter);
 
   app.use('/api', orderRouter);
+app.use('/api', paymentRouter);
 app.use('/api/auth', authRouter);
   app.use('/api/restaurants', restaurantRouter);
 app.use('/api/restaurants', menuRouter);

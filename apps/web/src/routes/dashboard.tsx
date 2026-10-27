@@ -62,9 +62,12 @@ export function DashboardRoute() {
         </form>
         <ul className="space-y-2">
           {(restaurants?.data.restaurants ?? []).map((r) => (
-            <li key={r.id} className="rounded-lg border p-3">
+            <li key={r.id} className="rounded-lg border p-3 flex items-center justify-between">
               <Link className="font-medium text-primary" to={`/dashboard/restaurants/${r.id}/menu`}>
                 {r.name}
+              </Link>
+              <Link className="text-sm text-primary" to={`/dashboard/restaurants/${r.id}/orders`}>
+                Orders
               </Link>
             </li>
           ))}
