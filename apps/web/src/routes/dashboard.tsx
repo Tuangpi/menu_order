@@ -69,6 +69,12 @@ export function DashboardRoute() {
               <Link className="text-sm text-primary" to={`/dashboard/restaurants/${r.id}/orders`}>
                 Orders
               </Link>
+              <Link className="text-sm text-primary" to={`/dashboard/restaurants/${r.id}/payments`}>
+                Payments
+              </Link>
+              <Link className="text-sm text-primary" to={`/dashboard/restaurants/${r.id}/reports`}>
+                Reports
+              </Link>
             </li>
           ))}
         </ul>

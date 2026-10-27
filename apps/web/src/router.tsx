@@ -7,6 +7,8 @@ import { LoginRoute } from './routes/login.js';
 import { DashboardRoute } from './routes/dashboard.js';
 import { MenuManageRoute } from './routes/menu-manage.js';
 import { OrdersManageRoute } from './routes/orders-manage.js';
+import { PaymentsManageRoute } from './routes/payments-manage.js';
+import { ReportsManageRoute } from './routes/reports-manage.js';
 
 /**
  * Application router.
@@ -31,6 +33,8 @@ export const router = createBrowserRouter([
       { path: 'dashboard', element: <DashboardRoute /> },
       { path: 'dashboard/restaurants/:restaurantId/menu', element: <MenuManageRoute /> },
       { path: 'dashboard/restaurants/:restaurantId/orders', element: <OrdersManageRoute /> },
+      { path: 'dashboard/restaurants/:restaurantId/payments', element: <PaymentsManageRoute /> },
+      { path: 'dashboard/restaurants/:restaurantId/reports', element: <ReportsManageRoute /> },
     ],
   },
 ]);

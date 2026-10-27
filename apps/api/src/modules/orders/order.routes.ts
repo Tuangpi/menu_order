@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import rateLimit from 'express-rate-limit';
 
 import { asyncHandler } from '../../lib/asyncHandler.js';
 import { validateRequest } from '../../middleware/validate.js';
@@ -9,6 +10,13 @@ import * as service from './order.service.js';
 
 export const orderRouter = Router();
 export const cartRouter = orderRouter;
+
+const orderRateLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 60,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 const paths = [
   '/checkout',
@@ -48,6 +56,7 @@ const paths = [
 
 orderRouter.post(
   paths,
+  orderRateLimiter,
   validateRequest({ params: flexibleParamsSchema, body: checkoutBodySchema }),
   asyncHandler(async (req, res) => {
     const result = await service.createOrder({

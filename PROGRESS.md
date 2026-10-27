@@ -2,11 +2,11 @@
 
 ## Current State
 
-- **Current task:** None. T017 complete.
-- **Most recently completed:** T017 — Payment recording and manual confirmation (2026-10-27).
-- **Unfinished work:** T018–T022.
+- **Current task:** None. T022 complete.
+- **Most recently completed:** T022 — Hosting, backups, monitoring, and pilot checklist (2026-10-27).
+- **Unfinished work:** None. All MVP tasks complete.
 - **Blockers:** None.
-- **Recommended next:** T018 — Payment UI.
+- **Recommended next:** None. MVP complete.
 
 ## Decisions
 
@@ -136,3 +136,39 @@
 - **Files changed:** apps/api/src/modules/payments/*, apps/api/src/app.ts.
 - **Checks run:** typecheck/lint pass; 44 tests pass; manual payment test pass.
 - **Follow-up:** T018 payment UI.
+.
+
+### T018 — Payment UI — DONE
+- **Result:** Added staff payments screen (`payments-manage.tsx`) with record cash/wallet payment form, pending confirmations, and payment history; wired route and dashboard link. Customer order view already polls payment status.
+- **Files changed:** apps/web/src/routes/payments-manage.tsx, apps/web/src/router.tsx, apps/web/src/routes/dashboard.tsx.
+- **Checks run:** typecheck/lint/build pass for web; API tests 44 pass.
+- **Follow-up:** T019 order history and reports.
+.
+
+### T019 — Order history and daily sales reports — DONE
+- **Result:** Added reports module (daily sales report + order history) with tenant isolation; endpoints support date filtering and multiple aliases. Web reports screen added. Tests cover totals and cross-tenant access.
+- **Files changed:** apps/api/src/modules/reports/*, apps/api/src/app.ts, apps/api/tests/reports.test.ts, apps/web/src/routes/reports-manage.tsx, apps/web/src/router.tsx, apps/web/src/routes/dashboard.tsx.
+- **Checks run:** typecheck/lint pass; 47 API tests pass; web build pass.
+- **Follow-up:** T020 e2e.
+.
+
+### T020 — End-to-end customer-to-staff workflow test — DONE
+- **Result:** Added Playwright e2e test covering register, menu setup, table creation, customer order, status update, cash payment, and report view. Test passes.
+- **Files changed:** e2e/workflow.spec.ts, playwright.config.ts (unchanged).
+- **Checks run:** Playwright chromium suite: 1 passed.
+- **Follow-up:** T021 security review.
+.
+
+### T021 — Security and tenant-isolation review — DONE
+- **Result:** Reviewed auth, sessions, CSRF, rate limiting, secrets, logging, and tenant isolation. Added production SESSION_SECRET requirement and rate limiting for public order creation. Documented in docs/SECURITY_REVIEW.md.
+- **Files changed:** apps/api/src/config.ts, apps/api/src/modules/orders/order.routes.ts, docs/SECURITY_REVIEW.md.
+- **Checks run:** typecheck/lint pass; 47 API tests pass.
+- **Unresolved findings:** CSRF relies on SameSite=Lax; public order lookup by UUID is unauthenticated by design.
+- **Follow-up:** T022.
+.
+
+### T022 — Hosting, backups, monitoring, and pilot checklist — DONE
+- **Result:** Added hosting, backup/restore, monitoring, and pilot checklist docs. Performed a backup and restore to a temporary database and verified record counts.
+- **Files changed:** docs/HOSTING.md, docs/BACKUP_RESTORE.md, docs/MONITORING.md, docs/PILOT_CHECKLIST.md.
+- **Checks run:** pg_dump + pg_restore to menu_order_restore_test succeeded; counts matched.
+- **Follow-up:** None.
