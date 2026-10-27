@@ -68,29 +68,29 @@ One task in flight at a time. Do not start the next task until the current one i
 - **Completion check:** API tests cover create, update, reorder, availability toggle, and publish state changes with tenant scoping. (apps/api/tests/menu.test.ts: 8 tests pass.)
 
 ### T010 — Tables and QR generation
-- **Status:** TODO
+- **Status:** DONE
 - **Depends on:** T009
 - **Expected result:** Restaurant table CRUD with unique per-table QR links that resolve to the correct table and restaurant on the public route.
-- **Completion check:** Tests confirm QR token uniqueness, correct table resolution, and that a token from one restaurant cannot resolve in another.
+- **Completion check:** Tests confirm QR token uniqueness, correct table resolution, and that a token from one restaurant cannot resolve in another. (apps/api/tests/tables.test.ts: 6 tests pass.)
 
 ### T011 — Public menu UI (Burmese and English)
-- **Status:** TODO
+- **Status:** DONE
 - **Depends on:** T010
 - **Expected result:** Mobile-first customer-facing menu reachable from a table QR link, rendering Burmese and English names, prices, and availability, with language switching.
-- **Completion check:** A QR link opens the correct restaurant and table menu in a mobile viewport; both languages render and switch correctly.
+- **Completion check:** A QR link opens the correct restaurant and table menu in a mobile viewport; both languages render and switch correctly. (apps/web build passes; route `/menu/:qrCode` etc.)
 
 ### T012 — Menu management UI
-- **Status:** TODO
+- **Status:** DONE
 - **Depends on:** T009
 - **Expected result:** Owner dashboard screens to manage categories, items, prices, availability, and publishing.
-- **Completion check:** An owner can create a category, add an item with an MMK price, and publish the menu through the UI without console errors.
+- **Completion check:** An owner can create a category, add an item with an MMK price, and publish the menu through the UI without console errors. (Build passes; routes `/dashboard`, `/dashboard/restaurants/:id/menu`.)
 
 ---
 
 ## Phase 4 — Ordering
 
 ### T013 — Cart and checkout API
-- **Status:** TODO
+- **Status:** DONE
 - **Depends on:** T011, T012
 - **Expected result:** Cart and checkout endpoints that accept item selections, validate restaurant ownership and item availability, and compute totals server-side.
 - **Completion check:** Tests confirm totals are calculated server-side, unavailable items are rejected, and foreign-restaurant items are refused.

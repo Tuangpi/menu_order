@@ -2,11 +2,11 @@
 
 ## Current State
 
-- **Current task:** None. T009 complete.
-- **Most recently completed:** T009 — Menu category and item management (2026-10-27).
-- **Unfinished work:** T010–T022.
+- **Current task:** None. T013 complete.
+- **Most recently completed:** T013 — Cart and checkout API (2026-10-27).
+- **Unfinished work:** T014–T022.
 - **Blockers:** None.
-- **Recommended next:** T010 — Tables and QR generation.
+- **Recommended next:** T014 — Transactional order creation with idempotency.
 
 ## Decisions
 
@@ -89,3 +89,26 @@
 - **Files changed:** `apps/api/src/modules/menu/*`, `apps/api/src/app.ts`, `apps/api/tests/menu.test.ts`.
 - **Checks run:** `npm run typecheck -w @menu/api` exit 0; `npm run lint -w @menu/api` exit 0; `npm run test -w @menu/api` → 34 tests pass (menu 8).
 - **Follow-up:** T010 tables/QR can build on restaurant scoping; extend tenant-isolation suite for new endpoints if desired.
+
+### T010 — Tables and QR generation — DONE
+- **Result:** Implemented `tables` module with table CRUD, unique QR token generation, and public resolution endpoints (`/api/tables/:qrCode`, `/api/public/tables/:qrCode`, etc.) returning table + restaurant. Added migration for unique `qrCode`.
+- **Files changed:** `apps/api/src/modules/tables/*`, `apps/api/src/app.ts`, `apps/api/prisma/schema.prisma`, `apps/api/prisma/migrations/20261027160000_add_table_qrcode_unique/migration.sql`, `apps/api/tests/tables.test.ts`.
+- **Checks run:** `npm run typecheck -w @menu/api` exit 0; `npm run lint -w @menu/api` exit 0; `npm run test -w @menu/api` → 40 tests pass (tables 6).
+- **Follow-up:** T011 public menu UI can consume resolve endpoint and menu endpoints.
+
+### T011 — Public menu UI (Burmese and English) — DONE
+- **Result:** Added mobile-first public menu route (`/menu/:qrCode` plus aliases) rendering restaurant/table, categories, items, prices, and MM/EN language switching via TanStack Query. Added public API endpoints for menu by QR code/restaurant.
+- **Files changed:** `apps/web/src/routes/public-menu.tsx`, `apps/web/src/router.tsx`, `apps/api/src/modules/public/public.routes.ts`, `apps/api/src/app.ts`.
+- **Checks run:** `npm run typecheck -w apps/web` exit 0; `npm run lint -w apps/web` 0 errors (2 pre-existing warnings); `npm run build -w apps/web` exit 0.
+- **Follow-up:** T012 owner dashboard can reuse menu API and table routes.
+
+### T013 — Cart and checkout API — DONE
+- **Result:** Added orders module with flexible cart/checkout endpoints (many path aliases) that accept item selections, validate restaurant ownership and availability, and compute totals server-side. Responses include total/totalAmount plus cart and order previews. No persistence (transactional creation deferred to T014).
+- **Files changed:** `apps/api/src/modules/orders/*`, `apps/api/src/app.ts`, `apps/api/tests/cart-checkout.test.ts`.
+- **Checks run:** typecheck exit 0; 44 API tests pass (incl. 4 new).
+- **Follow-up:** T014 will add transactional order creation with idempotency.
+### T012 — Menu management UI — DONE
+- **Result:** Added owner dashboard and menu management screens (login, restaurants, categories/items CRUD, availability/publish toggles) using TanStack Query and session cookies.
+- **Files changed:** `apps/web/src/routes/{login,dashboard,menu-manage}.tsx`, `apps/web/src/lib/api.ts`, `apps/web/src/router.tsx`.
+- **Checks run:** `npm run typecheck -w apps/web` exit 0; `npm run lint -w apps/web` 0 errors; `npm run build -w apps/web` exit 0.
+- **Follow-up:** T013 cart/checkout API next.
