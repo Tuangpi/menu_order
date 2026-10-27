@@ -34,6 +34,8 @@ export const config = {
     .split(',')
     .map((origin) => origin.trim())
     .filter(Boolean),
+  /** Secret used to sign session cookies. */
+  sessionSecret: process.env.SESSION_SECRET ?? 'dev-session-secret-change-me',
 } as const;
 
 export const isProduction = config.nodeEnv === 'production';

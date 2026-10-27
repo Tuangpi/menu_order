@@ -87,7 +87,7 @@ Do not begin a phase until the current phase works and its relevant checks pass.
 | Internal shared package | plain `"*"` version range | npm `workspace:` protocol support is inconsistent across versions | 2026-10-22 |
 | Parallel dev servers | single root `concurrently` devDependency | Runs web and api together with one dependency | 2026-10-22 |
 | Payment verification | manual staff confirmation only | No approved provider integration exists | 2026-10-22 |
-| Auth mechanism | open | Decide in T006; session cookies are the leading candidate | 2026-10-22 |
+| Auth mechanism | session cookies | Decided in T006; httpOnly signed cookie with server-side hashed session token | 2026-10-27 |
 | Prisma location | `apps/api/prisma/` | Only the API uses the DB; co-locates schema/migrations with `DATABASE_URL` in `apps/api/.env` | 2026-10-22 |
 
 ## Success Criteria

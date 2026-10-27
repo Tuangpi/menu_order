@@ -2,11 +2,11 @@
 
 ## Current State
 
-- **Current task:** None. T005 complete.
-- **Most recently completed:** T005 — Tooling, environment config, and test harness (2026-10-27).
-- **Unfinished work:** T006–T022 (all `TODO`).
+- **Current task:** None. T006 complete.
+- **Most recently completed:** T006 — Authentication and protected routes (2026-10-27).
+- **Unfinished work:** T007–T022.
 - **Blockers:** None.
-- **Recommended next:** T006 — Authentication and protected routes.
+- **Recommended next:** T007 — Restaurants, memberships, and tenant isolation.
 
 ## Decisions
 
@@ -64,3 +64,10 @@
 - `docs/` is tracked in git as of commit `27cbb8d`. The earlier untracked-spec risk is resolved.
 - `docs/ARCHITECTURE.md` names the shared workspace `packages/shared` and (updated) places `prisma/` under `apps/api/`. T001 confirmed the `packages/shared` layout; T004 will create `apps/api/prisma/`. The earlier root-level `prisma/` plan was superseded by the decision to co-locate Prisma with the API.
 - MMK prices must be stored as integers (kyat has no practical minor unit) to avoid floating-point rounding in order totals. Decide the storage type in T004.
+
+
+### T006 — Authentication and protected routes — DONE
+- **Result:** Added Prisma `Session` model with migration. Implemented cookie-based sessions (hashed token, 7-day expiry), bcrypt password hashing, register/login/logout/me endpoints, `requireAuth` guard, rate limiting on auth routes, and a protected example route. Tests cover all required flows.
+- **Files changed:** `apps/api/prisma/schema.prisma`, migration `add_sessions`, `src/lib/prisma.ts`, `src/config.ts`, `src/app.ts`, `src/middleware/auth.ts`, `src/modules/auth/*`, `src/routes/protected.ts`, `tests/auth.test.ts`, `.env.example`.
+- **Checks run:** `npm run typecheck`, `npm run lint`, `npm run build`, `npm run test -w @menu/api` (11 tests pass).
+- **Follow-up:** T007 will add restaurants/memberships and tenant guard built on `requireAuth`.

@@ -1,11 +1,14 @@
 import type { ApiErrorBody } from '@menu/shared';
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, { type Request, type Response } from 'express';
 
 import { config } from './config.js';
 import { errorHandler } from './middleware/errorHandler.js';
+import { authRouter } from './modules/auth/auth.routes.js';
 import { echoRouter } from './routes/echo.js';
 import { healthRouter } from './routes/health.js';
+import { protectedRouter } from './routes/protected.js';
 
 /**
  * Build the Express application.
@@ -23,11 +26,14 @@ export function createApp() {
     }),
   );
   app.use(express.json({ limit: '1mb' }));
+  app.use(cookieParser(config.sessionSecret));
 
   // Health is available at both `/health` and `/api/health` for compatibility.
   app.use(healthRouter);
   app.use('/api', healthRouter);
 
+  app.use('/api/auth', authRouter);
+  app.use('/api/protected', protectedRouter);
   app.use('/api', echoRouter);
 
   // 404 handler for unmatched API routes.
@@ -43,3 +49,4 @@ export function createApp() {
 
   return app;
 }
+

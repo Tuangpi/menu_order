@@ -42,7 +42,7 @@ One task in flight at a time. Do not start the next task until the current one i
 ## Phase 2 — Authentication and Tenancy
 
 ### T006 — Authentication and protected routes
-- **Status:** TODO
+- **Status:** DONE
 - **Depends on:** T005
 - **Expected result:** Registration, login, logout, and session handling with hashed passwords, plus server-side guards for protected routes and rate limiting on auth endpoints.
 - **Completion check:** Automated tests cover register, login, logout, invalid credentials, and rejection of unauthenticated requests to a protected route.
