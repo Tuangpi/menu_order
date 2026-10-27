@@ -20,19 +20,19 @@ One task in flight at a time. Do not start the next task until the current one i
 - **Completion check:** `npm run dev -w apps/web` serves the app and the root route renders without console errors; `npm run build -w apps/web` exits 0.
 
 ### T003 — Express API scaffold
-- **Status:** TODO
+- **Status:** DONE
 - **Depends on:** T001
 - **Expected result:** Express + TypeScript server in `apps/api` with Zod validation middleware, structured error handling, a health endpoint, and env config loading.
 - **Completion check:** `GET /health` returns 200 with a JSON body; invalid input to a Zod-validated route returns a 4xx error payload; `npm run build -w apps/api` exits 0.
 
 ### T004 — Prisma schema and first migration
-- **Status:** TODO
+- **Status:** DONE
 - **Depends on:** T003
 - **Expected result:** Prisma schema defining User, Restaurant, RestaurantMembership, MenuCategory, MenuItem, RestaurantTable, Order, OrderItem, PaymentEvent, with every tenant-owned record carrying `restaurantId`, plus an applied initial migration against a local PostgreSQL database. Schema and migrations live under `apps/api/prisma/` (DB is owned by the API).
 - **Completion check:** `npm run prisma:migrate -w @menu/api` (or `prisma migrate dev` run from `apps/api`) applies cleanly to an empty database and `prisma migrate status` reports no pending migrations.
 
 ### T005 — Tooling, environment config, and test harness
-- **Status:** TODO
+- **Status:** DONE
 - **Depends on:** T004
 - **Expected result:** `.env.example` covering all required variables, lint/format config, Vitest + Supertest for API tests, and a Playwright config skeleton for later end-to-end work.
 - **Completion check:** `npm run lint`, `npm run typecheck`, and `npm run test` all exit 0 across the monorepo; a sample Vitest and Supertest test pass.

@@ -1,0 +1,188 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  OWNER
+  MANAGER
+  STAFF
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PREPARING
+  READY
+  COMPLETED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  UNPAID
+  PENDING_CONFIRMATION
+  PAID
+  FAILED
+}
+
+enum PaymentMethod {
+  CASH
+  MANUAL_WALLET
+}
+
+enum PaymentEventStatus {
+  RECORDED
+  CONFIRMED
+  FAILED
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  name         String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  memberships RestaurantMembership[]
+}
+
+model Restaurant {
+  id        String   @id @default(uuid())
+  name      String
+  slug      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  memberships    RestaurantMembership[]
+  categories     MenuCategory[]
+  items          MenuItem[]
+  tables         RestaurantTable[]
+  orders         Order[]
+  paymentEvents  PaymentEvent[]
+}
+
+model RestaurantMembership {
+  id           String   @id @default(uuid())
+  userId       String
+  restaurantId String
+  role         Role
+  createdAt    DateTime @default(now())
+
+  user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  restaurant   Restaurant  @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, restaurantId])
+  @@index([restaurantId])
+  @@index([userId])
+}
+
+model MenuCategory {
+  id           String   @id @default(uuid())
+  restaurantId String
+  name         String
+  nameEn       String?
+  sortOrder    Int      @default(0)
+  isPublished  Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  items      MenuItem[]
+
+  @@index([restaurantId])
+}
+
+model MenuItem {
+  id           String   @id @default(uuid())
+  restaurantId String
+  categoryId   String
+  name         String
+  nameEn       String?
+  description  String?
+  price        Int
+  imageUrl     String?
+  isAvailable  Boolean  @default(true)
+  sortOrder    Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  restaurant Restaurant   @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  category   MenuCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@index([restaurantId])
+  @@index([categoryId])
+}
+
+model RestaurantTable {
+  id           String   @id @default(uuid())
+  restaurantId String
+  name         String
+  qrCode       String
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  orders     Order[]
+
+  @@index([restaurantId])
+}
+
+model Order {
+  id             String        @id @default(uuid())
+  restaurantId   String
+  tableId        String?
+  status         OrderStatus   @default(PENDING)
+  paymentStatus  PaymentStatus @default(UNPAID)
+  totalAmount    Int
+  idempotencyKey String?       @unique
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  restaurant    Restaurant      @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  table         RestaurantTable? @relation(fields: [tableId], references: [id], onDelete: SetNull)
+  items         OrderItem[]
+  paymentEvents PaymentEvent[]
+
+  @@index([restaurantId])
+  @@index([tableId])
+}
+
+model OrderItem {
+  id           String   @id @default(uuid())
+  orderId      String
+  restaurantId String
+  menuItemId   String?
+  name         String
+  nameEn       String?
+  price        Int
+  quantity     Int
+  createdAt    DateTime @default(now())
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+  @@index([restaurantId])
+}
+
+model PaymentEvent {
+  id            String              @id @default(uuid())
+  restaurantId  String
+  orderId       String
+  method        PaymentMethod
+  status        PaymentEventStatus  @default(RECORDED)
+  amount        Int
+  confirmedById String?
+  reference     String?
+  createdAt     DateTime            @default(now())
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  order      Order      @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([restaurantId])
+  @@index([orderId])
+}

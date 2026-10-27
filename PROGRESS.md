@@ -2,11 +2,11 @@
 
 ## Current State
 
-- **Current task:** None. T002 complete.
-- **Most recently completed:** T002 — React web app scaffold (2026-10-27).
-- **Unfinished work:** T003–T022 (all `TODO`).
+- **Current task:** None. T005 complete.
+- **Most recently completed:** T005 — Tooling, environment config, and test harness (2026-10-27).
+- **Unfinished work:** T006–T022 (all `TODO`).
 - **Blockers:** None.
-- **Recommended next:** T003 — Express API scaffold (Zod validation middleware, structured error handling, health endpoint, env config).
+- **Recommended next:** T006 — Authentication and protected routes.
 
 ## Decisions
 
@@ -34,6 +34,24 @@
 - **Files changed:** `apps/web/package.json`, `apps/web/vite.config.ts`, `apps/web/tsconfig.json`, `apps/web/src/{main,App,router,index.css}`, `apps/web/src/lib/utils.ts`, `apps/web/src/components/ui/button.tsx`, `apps/web/src/routes/{layout,index}.tsx`, `apps/web/components.json`.
 - **Checks run:** `npm run typecheck -w @menu/web` → exit 0; `npm run build -w @menu/web` → exit 0 (109 modules, built in 2.03s); dev server booted cleanly (`VITE ready in 282ms`, no errors). Root typecheck for shared and api also exit 0.
 - **Follow-up:** Tailwind v4 + shadcn wired manually (CLI init hung in this environment). `tw-animate-css` not installed; add later if component animations are needed. T003 is next.
+
+### T003 — Express API scaffold — DONE
+- **Result:** Added reusable `AppError` + helpers (`lib/errors.ts`), `asyncHandler` wrapper, `validateRequest` middleware (body/query/params), and central `errorHandler` (ZodError, AppError, malformed JSON, unknown). Added `POST /api/echo` Zod-validated route as proof. Health exposed at `/health` and `/api/health`. App composes middleware in `app.ts`.
+- **Files changed:** `apps/api/src/{app.ts, lib/errors.ts, lib/asyncHandler.ts, middleware/validate.ts, middleware/errorHandler.ts, routes/echo.ts}`.
+- **Checks run:** `npm run typecheck -w @menu/api` → exit 0; `npm run build -w @menu/api` → exit 0. Live checks: `GET /health` → 200; `GET /api/health` → 200; `POST /api/echo` valid → 200 `{data:{message}}`; invalid body → 400 `VALIDATION_ERROR`; malformed JSON → 400; unknown route → 404.
+- **Follow-up:** T004 needs Prisma; requires a local PostgreSQL. `DATABASE_URL` defaults to localhost. No DB used yet.
+
+### T004 — Prisma schema and first migration — DONE
+- **Result:** Created `apps/api/prisma/schema.prisma` with all core models (User, Restaurant, RestaurantMembership, MenuCategory, MenuItem, RestaurantTable, Order, OrderItem, PaymentEvent) plus enums; every tenant-owned record carries `restaurantId`. Created `prisma.config.ts` (Prisma 7 style, dotenv-loaded DATABASE_URL). Applied initial migration `20261027075216_init` to local `menu_order` DB. Generated Prisma Client.
+- **Files changed:** `apps/api/prisma/schema.prisma`, `apps/api/prisma/migrations/20261027075216_init/migration.sql`, `apps/api/prisma.config.ts`, `apps/api/package.json` (prisma scripts + deps), `apps/api/.env`.
+- **Checks run:** `npm run prisma:migrate -w @menu/api` (via `prisma migrate dev --name init`) → applied cleanly; `npm run prisma:status -w @menu/api` → "Database schema is up to date!"; `npm run typecheck`/`build -w @menu/api` → exit 0.
+- **Follow-up:** Prisma 7 requires a driver adapter (`@prisma/adapter-pg`) for runtime client — add in T006. `prisma` CLI in devDependencies. Database `menu_order` created on local Postgres (password `postgres`).
+
+### T005 — Tooling, environment config, and test harness — DONE
+- **Result:** Added ESLint flat configs (api/web/shared), Prettier config, Vitest configs + sample tests (Supertest for API health/echo, web cn util, shared formatMMK), Playwright config skeleton. Added lint/test scripts to all workspaces. `.env.example` already covers required vars.
+- **Files changed:** eslint.config.js (×3), .prettierrc, vitest.config.ts (×3), playwright.config.ts, test files, package.json scripts, src/test/setup.ts.
+- **Checks run:** `npm run lint` → 0 errors (2 react-refresh warnings); `npm run typecheck` → exit 0 all workspaces; `npm run test` → 7 tests pass (api 4, web 2, shared 1); `npm run build` → exit 0.
+- **Follow-up:** T006 needs auth implementation + Prisma runtime client (adapter).
 
 ## Open Questions
 
