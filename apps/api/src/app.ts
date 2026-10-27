@@ -6,6 +6,8 @@ import express, { type Request, type Response } from 'express';
 import { config } from './config.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { authRouter } from './modules/auth/auth.routes.js';
+import { restaurantRouter } from './modules/restaurants/restaurant.routes.js';
+import { menuRouter } from './modules/menu/menu.routes.js';
 import { echoRouter } from './routes/echo.js';
 import { healthRouter } from './routes/health.js';
 import { protectedRouter } from './routes/protected.js';
@@ -33,6 +35,8 @@ export function createApp() {
   app.use('/api', healthRouter);
 
   app.use('/api/auth', authRouter);
+  app.use('/api/restaurants', restaurantRouter);
+app.use('/api/restaurants', menuRouter);
   app.use('/api/protected', protectedRouter);
   app.use('/api', echoRouter);
 

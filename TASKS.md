@@ -48,13 +48,13 @@ One task in flight at a time. Do not start the next task until the current one i
 - **Completion check:** Automated tests cover register, login, logout, invalid credentials, and rejection of unauthenticated requests to a protected route.
 
 ### T007 — Restaurants, memberships, and tenant isolation
-- **Status:** TODO
+- **Status:** DONE
 - **Depends on:** T006
 - **Expected result:** Restaurant and membership CRUD restricted to owners, with a reusable server-side guard that derives the caller's restaurant scope and rejects cross-tenant access.
 - **Completion check:** Tests confirm an authenticated user can only read and write resources belonging to their own restaurant(s).
 
 ### T008 — Tenant-isolation test suite
-- **Status:** TODO
+- **Status:** DONE
 - **Depends on:** T007
 - **Expected result:** Dedicated automated coverage that every tenant-owned endpoint rejects requests carrying another restaurant's identifiers.
 - **Completion check:** Isolation tests exist for every tenant-owned route and all pass in CI-style runs.
@@ -62,10 +62,10 @@ One task in flight at a time. Do not start the next task until the current one i
 ## Phase 3 — Menu and Tables
 
 ### T009 — Menu category and item management
-- **Status:** TODO
+- **Status:** DONE
 - **Depends on:** T008
 - **Expected result:** Category and item CRUD with MMK prices, availability flag, and publish/unpublish state, all scoped to the caller's restaurant.
-- **Completion check:** API tests cover create, update, reorder, availability toggle, and publish state changes with tenant scoping.
+- **Completion check:** API tests cover create, update, reorder, availability toggle, and publish state changes with tenant scoping. (apps/api/tests/menu.test.ts: 8 tests pass.)
 
 ### T010 — Tables and QR generation
 - **Status:** TODO

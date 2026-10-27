@@ -2,11 +2,11 @@
 
 ## Current State
 
-- **Current task:** None. T006 complete.
-- **Most recently completed:** T006 — Authentication and protected routes (2026-10-27).
-- **Unfinished work:** T007–T022.
+- **Current task:** None. T009 complete.
+- **Most recently completed:** T009 — Menu category and item management (2026-10-27).
+- **Unfinished work:** T010–T022.
 - **Blockers:** None.
-- **Recommended next:** T007 — Restaurants, memberships, and tenant isolation.
+- **Recommended next:** T010 — Tables and QR generation.
 
 ## Decisions
 
@@ -71,3 +71,21 @@
 - **Files changed:** `apps/api/prisma/schema.prisma`, migration `add_sessions`, `src/lib/prisma.ts`, `src/config.ts`, `src/app.ts`, `src/middleware/auth.ts`, `src/modules/auth/*`, `src/routes/protected.ts`, `tests/auth.test.ts`, `.env.example`.
 - **Checks run:** `npm run typecheck`, `npm run lint`, `npm run build`, `npm run test -w @menu/api` (11 tests pass).
 - **Follow-up:** T007 will add restaurants/memberships and tenant guard built on `requireAuth`.
+
+### T007 — Restaurants, memberships, and tenant isolation — DONE
+- **Result:** Implemented restaurant CRUD, membership CRUD, and reusable `requireRestaurantAccess` tenant guard. Cross-tenant access returns 404; insufficient roles return 403.
+- **Files changed:** `src/middleware/tenant.ts`, `src/modules/restaurants/*`, `src/app.ts`, `tests/restaurants.test.ts`.
+- **Checks run:** typecheck, lint, build, 17 API tests pass.
+- **Follow-up:** T008 can extend tenant-isolation coverage across all future endpoints.
+
+### T008 — Tenant-isolation test suite — DONE
+- **Result:** Added `tests/tenant-isolation.test.ts` covering all tenant-owned restaurant and membership routes plus list leakage and unauthenticated access.
+- **Files changed:** `tests/tenant-isolation.test.ts`.
+- **Checks run:** 26 API tests pass.
+- **Follow-up:** Extend this suite as new tenant-owned endpoints are added in later tasks.
+
+### T009 — Menu category and item management — DONE
+- **Result:** Implemented `menu` module (schemas, service, routes) for category and item CRUD with MMK integer prices, availability toggle, reorder endpoints, and publish/unpublish state, all scoped via `requireRestaurantAccess`. Routes support collection/single/reorder/availability variants under `/api/restaurants/:restaurantId`. Cross-tenant access returns 404.
+- **Files changed:** `apps/api/src/modules/menu/*`, `apps/api/src/app.ts`, `apps/api/tests/menu.test.ts`.
+- **Checks run:** `npm run typecheck -w @menu/api` exit 0; `npm run lint -w @menu/api` exit 0; `npm run test -w @menu/api` → 34 tests pass (menu 8).
+- **Follow-up:** T010 tables/QR can build on restaurant scoping; extend tenant-isolation suite for new endpoints if desired.
