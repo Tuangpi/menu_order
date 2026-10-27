@@ -122,13 +122,13 @@ One task in flight at a time. Do not start the next task until the current one i
 - **Completion check:** Tests confirm confirmations are attributable to staff, timestamps are recorded, and a confirmation cannot be attributed to another restaurant's staff.
 
 ### T018 — Payment UI
-- **Status:** TODO
+- **Status:** DONE
 - **Depends on:** T017
 - **Expected result:** Staff screens to record a payment and confirm a wallet payment, with the customer able to see the resulting payment status.
 - **Completion check:** A staff member can record a cash payment and confirm a wallet payment through the UI, and both appear in payment history.
 
 ### T019 — Order history and daily sales reports
-- **Status:** TODO
+- **Status:** DONE
 - **Depends on:** T018
 - **Expected result:** Owner-facing order history plus a daily sales report computed from stored orders for the caller's restaurant only.
 - **Completion check:** Report totals match the underlying order records in a test fixture, and cross-tenant data never appears.
@@ -138,19 +138,19 @@ One task in flight at a time. Do not start the next task until the current one i
 ## Phase 6 — Testing, Security Review, and Launch
 
 ### T020 — End-to-end customer-to-staff workflow test
-- **Status:** TODO
+- **Status:** DONE
 - **Depends on:** T019
 - **Expected result:** A Playwright test covering register, configure menu, generate QR, order, update status, record payment, and view the report.
 - **Completion check:** The Playwright suite passes against a seeded test environment.
 
 ### T021 — Security and tenant-isolation review
-- **Status:** TODO
+- **Status:** DONE
 - **Depends on:** T020
 - **Expected result:** Documented review of auth, session handling, CSRF, rate limiting, secret exposure, logging, and cross-tenant access, with fixes applied.
 - **Completion check:** Each checklist item is verified by test or code inspection, and unresolved findings are recorded in `PROGRESS.md`.
 
 ### T022 — Hosting, backups, monitoring, and pilot checklist
-- **Status:** TODO
+- **Status:** DONE
 - **Depends on:** T021
 - **Expected result:** Documented production hosting plan, backup and restore procedure, monitoring and alerting setup, and a pilot checklist for 2–3 restaurants.
 - **Completion check:** The procedure is written in `docs/`, and a backup restore is performed successfully against a non-production database.
