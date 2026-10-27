@@ -14,7 +14,7 @@ One task in flight at a time. Do not start the next task until the current one i
 - **Completion check:** `npm install` succeeds from a clean clone; `npm run build` and `npm run typecheck` exit 0 with no workspace errors.
 
 ### T002 — React web app scaffold
-- **Status:** TODO
+- **Status:** DONE
 - **Depends on:** T001
 - **Expected result:** Vite + React + TypeScript app in `apps/web` with React Router, Tailwind CSS, shadcn/ui, and TanStack Query wired, plus a placeholder layout route.
 - **Completion check:** `npm run dev -w apps/web` serves the app and the root route renders without console errors; `npm run build -w apps/web` exits 0.
@@ -28,8 +28,8 @@ One task in flight at a time. Do not start the next task until the current one i
 ### T004 — Prisma schema and first migration
 - **Status:** TODO
 - **Depends on:** T003
-- **Expected result:** Prisma schema defining User, Restaurant, RestaurantMembership, MenuCategory, MenuItem, RestaurantTable, Order, OrderItem, PaymentEvent, with every tenant-owned record carrying `restaurantId`, plus an applied initial migration against a local PostgreSQL database.
-- **Completion check:** `prisma migrate dev` applies cleanly to an empty database and `prisma migrate status` reports no pending migrations.
+- **Expected result:** Prisma schema defining User, Restaurant, RestaurantMembership, MenuCategory, MenuItem, RestaurantTable, Order, OrderItem, PaymentEvent, with every tenant-owned record carrying `restaurantId`, plus an applied initial migration against a local PostgreSQL database. Schema and migrations live under `apps/api/prisma/` (DB is owned by the API).
+- **Completion check:** `npm run prisma:migrate -w @menu/api` (or `prisma migrate dev` run from `apps/api`) applies cleanly to an empty database and `prisma migrate status` reports no pending migrations.
 
 ### T005 — Tooling, environment config, and test harness
 - **Status:** TODO

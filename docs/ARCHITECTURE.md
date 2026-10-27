@@ -21,11 +21,11 @@ Use a modular monolith with a separate React frontend and Express API. Manage bo
 apps/
   web/              # React application
   api/              # Express API
+    prisma/         # Prisma schema and migrations (DB owned by the API)
+      schema.prisma
+      migrations/
 packages/
-  shared/            # Shared types and schemas
-prisma/
-  schema.prisma
-  migrations/
+  shared/           # Shared types and schemas
 docs/
 ```
 

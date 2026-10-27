@@ -1,16 +1,12 @@
-import { CURRENCY_MMK } from '@menu/shared';
+import { AppRouter } from './router.js';
 
 /**
- * Root application shell.
+ * Root application component.
  *
- * T002 replaces this placeholder with routing, Tailwind and shadcn/ui.
- * It already renders shared-package data so the workspace wiring is proven.
+ * Delegates to the router so providers configured in `main.tsx` wrap the
+ * whole tree. `App.tsx` previously held a placeholder; routing now lives in
+ * `router.tsx`.
  */
 export function App() {
-  return (
-    <main>
-      <h1>Menu Order</h1>
-      <p>Currency: {CURRENCY_MMK}</p>
-    </main>
-  );
+  return <AppRouter />;
 }

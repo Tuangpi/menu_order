@@ -88,6 +88,7 @@ Do not begin a phase until the current phase works and its relevant checks pass.
 | Parallel dev servers | single root `concurrently` devDependency | Runs web and api together with one dependency | 2026-10-22 |
 | Payment verification | manual staff confirmation only | No approved provider integration exists | 2026-10-22 |
 | Auth mechanism | open | Decide in T006; session cookies are the leading candidate | 2026-10-22 |
+| Prisma location | `apps/api/prisma/` | Only the API uses the DB; co-locates schema/migrations with `DATABASE_URL` in `apps/api/.env` | 2026-10-22 |
 
 ## Success Criteria
 A restaurant can register, configure its menu, generate table QR codes, receive customer orders, manage fulfillment, and record payments without developer assistance.
